@@ -40,5 +40,5 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;  // Speicher freigeben, um Speicherlecks zu vermeiden
+    delete ui;
 }
