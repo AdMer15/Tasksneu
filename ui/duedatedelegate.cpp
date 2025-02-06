@@ -33,7 +33,7 @@ void RelativeDueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     case RelativeDue::Tomorrow:
     case RelativeDue::ThisWeek:
         fillColor = QColor(255, 102, 102); // Rot //hier
-        textColor = Qt::white; // Ändere die Textfarbe auf Weiß für bessere Sichtbarkeit
+        textColor = Qt::white;
         break;
     case RelativeDue::NextWeek:
         fillColor = QColor(255, 180, 102);  // Orange //hier
