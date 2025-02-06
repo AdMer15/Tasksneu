@@ -25,12 +25,15 @@ QString RelativeDueDelegate::displayText(const QVariant& value, const QLocale&) 
 void RelativeDueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                                 const QModelIndex &index) const {
     QColor fillColor; // das deklariert eine farbe. Diese setze ich dann später. QColor ist auch eine Qt Klasse
+    QColor textColor = Qt::black; // Standard-Textfarbe auf Schwarz setzen
+
     switch (index.data(Qt::DisplayRole).value<RelativeDue>()) {//index.data ruft einfach die gespeicherten werte von meiner Tabelle ab aus den einzelnen Zellen
     case RelativeDue::Overdue:
     case RelativeDue::Today:
     case RelativeDue::Tomorrow:
     case RelativeDue::ThisWeek:
-        fillColor = QColor(255, 102, 102);  // Rot //hier
+        fillColor = QColor(255, 102, 102); // Rot //hier
+        textColor = Qt::white; // Ändere die Textfarbe auf Weiß für bessere Sichtbarkeit
         break;
     case RelativeDue::NextWeek:
         fillColor = QColor(255, 180, 102);  // Orange //hier
@@ -41,17 +44,18 @@ void RelativeDueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
         fillColor = QColor(102, 255, 102);  // Grün // und hier
         break;
     default:
-        fillColor = Qt::lightGray;
+        fillColor = Qt::lightGray; // einfach als standard hintergrund
     }
 
     fillColor.setAlpha(200);// macht die Farbe einfach durchsichtiger.
 
-    painter->save();//speichert einfach den aktuellen zustand vom Qpaint objekt
+    painter->save();//speichert einfach den aktuellen zustand vom Qpbaint objekt
     painter->fillRect(option.rect, fillColor);//zeichnet ein gefülltes rechteck
-    painter->setPen(Qt::black);//setzt text farbe auf schwarz
-    painter->drawText(option.rect, Qt::AlignCenter, displayText(index.data(Qt::DisplayRole), QLocale()));//eifach nur damit es es in der mitte der zelle steht
+    painter->setPen(textColor);//setzt text farbe abhängig vom hintergrund (weiß falls rot, sonst schwarz)
+    painter->drawText(option.rect, Qt::AlignCenter, displayText(index.data(Qt::DisplayRole), QLocale()));//einfach nur damit es es in der mitte der zelle steht
     painter->restore(); // setzt den zustand zurück. Das ist wichtig weil der painter für andere zellen verwendet wird
 }
+
 
 
 
